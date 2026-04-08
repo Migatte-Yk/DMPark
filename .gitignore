@@ -1,0 +1,37 @@
+# Entorno virtual
+venv/
+env/
+ENV/
+
+# Archivos de Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+
+# Archivos de sistema
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Archivos temporales
+*.tmp
+*.temp
+
+# Logs
+*.log
+
+# Archivos de configuración local
+config.local.py
+
+# Modelos grandes (opcional - descomentar si no quieres subirlos)
+# modelo_parqueo.pkl
+# label_encoders.pkl
+
+# Datos sensibles (si los hubiera)
+# data/*.csv

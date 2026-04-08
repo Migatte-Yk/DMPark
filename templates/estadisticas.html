@@ -1,0 +1,61 @@
+{% extends "base.html" %}
+
+{% block title %}Estadísticas - ParqueaChía{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0">📊 Estadísticas del Dataset</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted mb-4">Análisis completo de ocupación de parqueaderos en Chía basado en datos históricos</p>
+                        
+                        {% if grafico %}
+                            <img src="{{ grafico }}" alt="Estadísticas" class="img-fluid rounded mb-4">
+                        {% else %}
+                            <div class="alert alert-warning">No se pudo generar el gráfico de estadísticas.</div>
+                        {% endif %}
+
+                        <div class="row mt-5">
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h5 class="card-title">🔍 Patrones observados</h5>
+                                        <ul class="list-unstyled">
+                                            <li><strong>Fines de semana:</strong> Mayor ocupación en Centro y Parque Principal</li>
+                                            <li><strong>Hora pico:</strong> 8-10 AM, 12-2 PM, 5-7 PM</li>
+                                            <li><strong>Madrugada:</strong> Menor ocupación (6-8 AM, después de 8 PM)</li>
+                                            <li><strong>Centro:</strong> Zona con mayor ocupación consistente</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="card bg-light">
+                                    <div class="card-body">
+                                        <h5 class="card-title">💡 Recomendaciones</h5>
+                                        <ul class="list-unstyled">
+                                            <li><strong>🟢 Horas sugeridas:</strong> 10-12 AM, 3-4 PM</li>
+                                            <li><strong>🟡 Alternativas:</strong> Universidad y Alcaldía en horario laboral</li>
+                                            <li><strong>🎯 Mejor opción:</strong> Depende de tu zona destino</li>
+                                            <li><strong>📍 Centro:</strong> Mejor ir entre semana</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <a href="/" class="btn btn-primary btn-lg mt-4">
+                            🔍 Hacer una predicción
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

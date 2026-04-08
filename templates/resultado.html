@@ -1,0 +1,96 @@
+{% extends "base.html" %}
+
+{% block title %}Resultado de Predicción - ParqueaChía{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-8">
+                <!-- Tarjeta de resultado -->
+                <div class="card shadow-lg mb-4">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0">Resultado de la Predicción</h3>
+                    </div>
+                    <div class="card-body">
+                        <!-- Resumen de entrada -->
+                        <div class="alert alert-light">
+                            <p class="mb-2"><strong>📍 Zona:</strong> {{ zona }}</p>
+                            <p class="mb-2"><strong>📅 Día:</strong> {{ dia }}</p>
+                            <p class="mb-0"><strong>⏰ Hora:</strong> {{ "%02d" % hora }}:00</p>
+                        </div>
+
+                        <!-- Predicción principal -->
+                        <div class="text-center py-4">
+                            <h1 class="display-1 mb-2">{{ emoji }}</h1>
+                            <h2 class="mb-1">Ocupación <strong>{{ ocupacion.upper() }}</strong></h2>
+                            <p class="text-muted" style="font-size: 1.2rem;">
+                                Confianza del modelo: <strong>{{ "%.1f" % confianza }}%</strong>
+                            </p>
+                        </div>
+
+                        <!-- Indicador visual de confianza -->
+                        <div class="mb-4">
+                            <label class="form-label">Nivel de confianza</label>
+                            <div class="progress" style="height: 25px;">
+                                <div class="progress-bar 
+                                    {% if confianza >= 80 %}bg-success
+                                    {% elif confianza >= 60 %}bg-info
+                                    {% else %}bg-warning{% endif %}"
+                                    role="progressbar" 
+                                    style="width: {{ confianza }}%;" 
+                                    aria-valuenow="{{ confianza }}" 
+                                    aria-valuemin="0" 
+                                    aria-valuemax="100">
+                                    {{ "%.1f" % confianza }}%
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Recomendación -->
+                        <div class="alert alert-warning" role="alert">
+                            <h5 class="alert-heading">💡 Recomendación:</h5>
+                            <p class="mb-0">{{ recomendacion }}</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Gráfico de ocupación por hora -->
+                {% if grafico %}
+                <div class="card shadow-lg">
+                    <div class="card-header bg-secondary text-white">
+                        <h5 class="card-title mb-0">📊 Ocupación por hora</h5>
+                    </div>
+                    <div class="card-body text-center">
+                        <p class="text-muted small">Gráfico de ocupación promedio por hora para {{ zona }} en {{ dia }}</p>
+                        <img src="{{ grafico }}" alt="Gráfico de ocupación" class="img-fluid rounded">
+                    </div>
+                </div>
+                {% endif %}
+
+                <!-- Botones de acción -->
+                <div class="mt-4 d-flex gap-2 justify-content-center">
+                    <a href="/" class="btn btn-primary btn-lg">
+                        🔍 Nueva predicción
+                    </a>
+                    <a href="/estadisticas" class="btn btn-secondary btn-lg">
+                        📊 Ver estadísticas
+                    </a>
+                </div>
+
+                <!-- Información interpretación -->
+                <div class="card mt-4 bg-light">
+                    <div class="card-body">
+                        <h5 class="card-title">ℹ️ Interpretación de niveles</h5>
+                        <ul class="mb-0">
+                            <li><strong>🟢 BAJA:</strong> Amplia disponibilidad de estacionamiento</li>
+                            <li><strong>🟡 MEDIA:</strong> Disponibilidad moderada, puede haber demora</li>
+                            <li><strong>🔴 ALTA:</strong> Ocupación crítica, difícil encontrar estacionamiento</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

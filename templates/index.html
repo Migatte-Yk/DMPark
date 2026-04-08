@@ -1,0 +1,83 @@
+{% extends "base.html" %}
+
+{% block title %}Predicción de Parqueaderos - ParqueaChía{% endblock %}
+
+{% block content %}
+
+    <div class="container mt-5">
+        <div class="row justify-content-center">
+            <div class="col-md-6">
+                <div class="card shadow-lg">
+                    <div class="card-header bg-primary text-white">
+                        <h3 class="card-title mb-0">🔍 Consulta disponibilidad</h3>
+                    </div>
+                    <div class="card-body">
+                        <p class="text-muted">Selecciona el día, hora y zona para conocer la ocupación estimada.</p>
+                        
+                        <form method="POST" action="/predecir">
+                            <!-- Día de la semana -->
+                            <div class="mb-3">
+                                <label for="dia_semana" class="form-label">📅 Día de la semana</label>
+                                <select class="form-select form-select-lg" id="dia_semana" name="dia_semana" required>
+                                    <option value="">-- Selecciona un día --</option>
+                                    {% for dia in dias %}
+                                        <option value="{{ dia }}">{{ dia }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Hora -->
+                            <div class="mb-3">
+                                <label for="hora" class="form-label">⏰ Hora del día</label>
+                                <select class="form-select form-select-lg" id="hora" name="hora" required>
+                                    <option value="">-- Selecciona una hora --</option>
+                                    {% for hora in horas %}
+                                        <option value="{{ hora }}">{{ "%02d" % hora }}:00 - {{ "%02d" % (hora + 1) }}:00</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Zona -->
+                            <div class="mb-3">
+                                <label for="zona" class="form-label">📍 Zona de parqueo</label>
+                                <select class="form-select form-select-lg" id="zona" name="zona" required>
+                                    <option value="">-- Selecciona una zona --</option>
+                                    {% for zona in zonas %}
+                                        <option value="{{ zona }}">{{ zona }}</option>
+                                    {% endfor %}
+                                </select>
+                            </div>
+
+                            <!-- Botón enviar -->
+                            <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">
+                                🔎 Predecir ocupación
+                            </button>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Información adicional -->
+                <div class="alert alert-info mt-4">
+                    <h5>ℹ️ ¿Cómo funciona?</h5>
+                    <p class="mb-0">Este sistema utiliza un modelo de Machine Learning (Random Forest) entrenado con datos históricos de ocupación en Chía para predecir la disponibilidad de parqueaderos.</p>
+                </div>
+
+                <!-- Información de zonas -->
+                <div class="card mt-3">
+                    <div class="card-header bg-light">
+                        <h5 class="mb-0">📍 Zonas disponibles</h5>
+                    </div>
+                    <div class="card-body">
+                        <ul class="list-unstyled">
+                            <li><strong>Centro:</strong> Zona central de Chía, alta circulación</li>
+                            <li><strong>Universidad:</strong> Cercanía a universidades locales</li>
+                            <li><strong>Alcaldía:</strong> Zona administrativa</li>
+                            <li><strong>Parque Principal:</strong> Zona de recreación</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}
