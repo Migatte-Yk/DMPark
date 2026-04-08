@@ -1,8 +1,8 @@
-# 🅿️ Predictor de Ocupación de Parqueaderos - Chía
+# Predictor de Ocupación de Parqueaderos - Chía
 
 Aplicación web desarrollada con Python, Flask y Machine Learning que predice la ocupación de parqueaderos en el centro de Chía, Cundinamarca.
 
-## 📋 Contenido del proyecto
+## Contenido del proyecto
 
 ```
 proyecto_parqueo_chia/
@@ -33,14 +33,14 @@ proyecto_parqueo_chia/
 └── README.md               # Este archivo
 ```
 
-## 🚀 Requisitos previos
+## Requisitos previos
 
 - **Python 3.9 o superior**
 - **pip** (gestor de paquetes de Python)
 - Un navegador web moderno
 - Visual Studio Code (recomendado)
 
-## 📦 Instalación paso a paso
+## Instalación paso a paso
 
 ### 1. Clona o descarga este proyecto
 
@@ -83,7 +83,7 @@ pip install -r requirements.txt
 - numpy 1.24.3 - Cálculos numéricos
 - matplotlib 3.7.2 - Visualizaciones
 
-## 🎓 Entrenar el modelo
+## Entrenar el modelo
 
 Antes de ejecutar la aplicación web, debes entrenar el modelo:
 
@@ -127,7 +127,7 @@ Guardando artefactos del modelo...
 ¡Entrenamiento completado exitosamente!
 ```
 
-## ▶️ Ejecutar la aplicación web
+## Ejecutar la aplicación web
 
 Una vez entrenado el modelo:
 
@@ -144,7 +144,7 @@ python app.py
 
 Luego abre tu navegador en: **http://127.0.0.1:5000**
 
-## 🎯 Funcionalidades principales
+## Funcionalidades principales
 
 ### 1. **Landing Page (/)** - Página de presentación profesional
 - Hero section con título llamativo y llamada a la acción
@@ -177,7 +177,7 @@ Visualiza análisis completo del dataset:
 - Ocupación por día
 - Ocupación promedio por hora
 
-## 📊 Estructura de datos
+##  Estructura de datos
 
 El dataset generado contiene:
 
@@ -200,14 +200,14 @@ El modelo aprende patrones como:
 - Horas pico durante la mañana, mediodía y tarde
 - Diferencias en ocupación por zona
 
-## 🎨 Interfaz de usuario
+##  Interfaz de usuario
 
 - **Responsive:** Funciona en móviles, tablets y desktop
 - **Bootstrap 5:** Interfaz moderna y atractiva
 - **Emojis:** Indicadores visuales intuitivos
 - **Gráficos:** Matplotlib integrado en base64
 
-## 🔧 Solución de problemas
+##  Solución de problemas
 
 ### Error: "Modelo o encoders no encontrados"
 **Solución:** Ejecuta primero `python train_model.py`
@@ -231,7 +231,7 @@ Si ves un error de "RemoteSigned", ejecuta:
 Set-ExecutionPolicy -ExecutionPolicy RemoteSigned -Scope CurrentUser
 ```
 
-## 📝 Archivos principales explicados
+##  Archivos principales explicados
 
 ### `train_model.py`
 Genera datos sintéticos y entrena el modelo. Ejecutar UNA SOLA VEZ.
@@ -257,16 +257,16 @@ Aplicación Flask que sirve la interfaz web.
 - `resultado.html` - Página de resultado con gráfico
 - `estadisticas.html` - Análisis del dataset
 
-## 🖼️ Características de la UI
+##  Características de la UI
 
-- ✅ Selectores con opciones validadas
-- ✅ Gráficos generados dinámicamente
-- ✅ Indicadores visuales de confianza
-- ✅ Recomendaciones personalizadas
-- ✅ Diseño responsive
-- ✅ Navegación intuitiva
+-  Selectores con opciones validadas
+-  Gráficos generados dinámicamente
+-  Indicadores visuales de confianza
+-  Recomendaciones personalizadas
+-  Diseño responsive
+-  Navegación intuitiva
 
-## 📚 Conceptos de Data Mining implementados
+##  Conceptos de Data Mining implementados
 
 1. **Generación de datos sintéticos:** Simulación realista de patrones
 2. **Codificación de variables:** Conversión de categóricas a numéricas
@@ -275,7 +275,7 @@ Aplicación Flask que sirve la interfaz web.
 5. **Predicción:** Clasificación en nuevos datos
 6. **Visualización:** Análisis exploratorio de datos
 
-## 🎓 Notas pedagógicas
+##  Notas pedagógicas
 
 Este proyecto es educativo y demuestra:
 - Ciclo completo de ML (datos → modelo → predicción)
@@ -283,11 +283,11 @@ Este proyecto es educativo y demuestra:
 - Buenas prácticas de código Python
 - Interfaz web responsiva
 
-## 📄 Licencia
+##  Licencia
 
 Proyecto académico para materia de Data Mining.
 
-## ✅ Checklist de uso
+##  Checklist de uso
 
 - [ ] Descargué el proyecto en `DataMining/proyecto_parqueo_chia/`
 - [ ] Creé el entorno virtual con `python -m venv venv`
@@ -297,9 +297,9 @@ Proyecto académico para materia de Data Mining.
 - [ ] Ejecuté la app: `python app.py`
 - [ ] Abrí http://127.0.0.1:5000 en el navegador
 
-¡Listo! 🎉
 
-## 🆘 Soporte
+
+##  Soporte
 
 Si tienes problemas:
 1. Verifica que Python 3.9+ está instalado: `python --version`
@@ -309,4 +309,3 @@ Si tienes problemas:
 
 ---
 
-**Desarrollado con ❤️ para la materia de Data Mining**
