@@ -1,25 +1,56 @@
 {% extends "base.html" %}
 
-{% block title %}Predicción de Parqueaderos - ParqueaChía{% endblock %}
+{% block title %}Consultar Disponibilidad — ParqueaChía{% endblock %}
 
 {% block content %}
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-6">
-                <div class="card shadow-lg">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="card-title mb-0">🔍 Consulta disponibilidad</h3>
-                    </div>
-                    <div class="card-body">
-                        <p class="text-muted">Selecciona el día, hora y zona para conocer la ocupación estimada.</p>
-                        
-                        <form method="POST" action="/predecir">
-                            <!-- Día de la semana -->
-                            <div class="mb-3">
-                                <label for="dia_semana" class="form-label">📅 Día de la semana</label>
+<!-- Page Hero -->
+<section class="page-hero text-white">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                        <li class="breadcrumb-item active">Predicción</li>
+                    </ol>
+                </nav>
+                <h2 class="mb-2">
+                    <i class="fas fa-search-location me-3 text-warning"></i>Consultar Disponibilidad
+                </h2>
+                <p class="lead mb-0">
+                    Selecciona el día, la hora y la zona para estimar la ocupación de parqueaderos en Chía.
+                </p>
+            </div>
+            <div class="col-lg-4 text-end d-none d-lg-block">
+                <i class="fas fa-parking fa-7x opacity-25"></i>
+            </div>
+        </div>
+    </div>
+</section>
+
+<div class="container py-5">
+    <div class="row g-4">
+
+        <!-- Formulario principal -->
+        <div class="col-lg-7">
+            <div class="card shadow-lg fade-in">
+                <div class="card-header bg-primary text-white">
+                    <h5 class="mb-0">
+                        <i class="fas fa-sliders-h me-2"></i>Parámetros de búsqueda
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form method="POST" action="/predecir">
+                        <div class="row g-3">
+
+                            <!-- Día -->
+                            <div class="col-md-6">
+                                <label for="dia_semana" class="form-label">
+                                    <i class="fas fa-calendar-alt me-2" style="color: var(--secondary-color)"></i>Día de la semana
+                                </label>
                                 <select class="form-select form-select-lg" id="dia_semana" name="dia_semana" required>
-                                    <option value="">-- Selecciona un día --</option>
+                                    <option value="">— Selecciona un día —</option>
                                     {% for dia in dias %}
                                         <option value="{{ dia }}">{{ dia }}</option>
                                     {% endfor %}
@@ -27,57 +58,100 @@
                             </div>
 
                             <!-- Hora -->
-                            <div class="mb-3">
-                                <label for="hora" class="form-label">⏰ Hora del día</label>
+                            <div class="col-md-6">
+                                <label for="hora" class="form-label">
+                                    <i class="fas fa-clock me-2" style="color: var(--secondary-color)"></i>Hora del día
+                                </label>
                                 <select class="form-select form-select-lg" id="hora" name="hora" required>
-                                    <option value="">-- Selecciona una hora --</option>
+                                    <option value="">— Selecciona una hora —</option>
                                     {% for hora in horas %}
-                                        <option value="{{ hora }}">{{ "%02d" % hora }}:00 - {{ "%02d" % (hora + 1) }}:00</option>
+                                        <option value="{{ hora }}">{{ "%02d" % hora }}:00 — {{ "%02d" % (hora + 1) }}:00</option>
                                     {% endfor %}
                                 </select>
                             </div>
 
                             <!-- Zona -->
-                            <div class="mb-3">
-                                <label for="zona" class="form-label">📍 Zona de parqueo</label>
+                            <div class="col-12">
+                                <label for="zona" class="form-label">
+                                    <i class="fas fa-map-marker-alt me-2" style="color: var(--secondary-color)"></i>Zona de parqueo
+                                </label>
                                 <select class="form-select form-select-lg" id="zona" name="zona" required>
-                                    <option value="">-- Selecciona una zona --</option>
+                                    <option value="">— Selecciona una zona —</option>
                                     {% for zona in zonas %}
                                         <option value="{{ zona }}">{{ zona }}</option>
                                     {% endfor %}
                                 </select>
                             </div>
+                        </div>
 
-                            <!-- Botón enviar -->
-                            <button type="submit" class="btn btn-primary btn-lg w-100 mt-4">
-                                🔎 Predecir ocupación
-                            </button>
-                        </form>
-                    </div>
-                </div>
-
-                <!-- Información adicional -->
-                <div class="alert alert-info mt-4">
-                    <h5>ℹ️ ¿Cómo funciona?</h5>
-                    <p class="mb-0">Este sistema utiliza un modelo de Machine Learning (Random Forest) entrenado con datos históricos de ocupación en Chía para predecir la disponibilidad de parqueaderos.</p>
-                </div>
-
-                <!-- Información de zonas -->
-                <div class="card mt-3">
-                    <div class="card-header bg-light">
-                        <h5 class="mb-0">📍 Zonas disponibles</h5>
-                    </div>
-                    <div class="card-body">
-                        <ul class="list-unstyled">
-                            <li><strong>Centro:</strong> Zona central de Chía, alta circulación</li>
-                            <li><strong>Universidad:</strong> Cercanía a universidades locales</li>
-                            <li><strong>Alcaldía:</strong> Zona administrativa</li>
-                            <li><strong>Parque Principal:</strong> Zona de recreación</li>
-                        </ul>
-                    </div>
+                        <button type="submit" class="btn btn-warning btn-lg w-100 mt-4 fw-bold">
+                            <i class="fas fa-rocket me-2"></i>Predecir ocupación
+                        </button>
+                    </form>
                 </div>
             </div>
+
+            <!-- Info del modelo -->
+            <div class="alert alert-info mt-4 fade-in">
+                <h6 class="fw-bold mb-2">
+                    <i class="fas fa-robot me-2"></i>¿Cómo funciona el modelo?
+                </h6>
+                <p class="mb-0 small">
+                    Usamos un modelo <strong>Random Forest</strong> entrenado con datos históricos de ocupación en Chía.
+                    Analiza patrones de día, hora y zona para estimar la disponibilidad con alta precisión.
+                </p>
+            </div>
         </div>
+
+        <!-- Sidebar: Zonas -->
+        <div class="col-lg-5">
+            <h5 class="fw-bold mb-3" style="color: var(--primary-color)">
+                <i class="fas fa-map-marked-alt me-2" style="color: var(--secondary-color)"></i>Zonas disponibles
+            </h5>
+
+            <div class="d-flex flex-column gap-3">
+
+                <div class="zone-card">
+                    <div class="zone-icon">
+                        <i class="fas fa-city text-white small"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Centro</h6>
+                    <p class="text-muted small mb-0">Zona central de Chía. Mayor circulación vehicular durante todo el día.</p>
+                </div>
+
+                <div class="zone-card">
+                    <div class="zone-icon">
+                        <i class="fas fa-graduation-cap text-white small"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Universidad</h6>
+                    <p class="text-muted small mb-0">Cercanía a universidades locales. Alta demanda en horario académico.</p>
+                </div>
+
+                <div class="zone-card">
+                    <div class="zone-icon">
+                        <i class="fas fa-landmark text-white small"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Alcaldía</h6>
+                    <p class="text-muted small mb-0">Zona administrativa. Ocupación concentrada en horario laboral.</p>
+                </div>
+
+                <div class="zone-card">
+                    <div class="zone-icon">
+                        <i class="fas fa-tree text-white small"></i>
+                    </div>
+                    <h6 class="fw-bold mb-1">Parque Principal</h6>
+                    <p class="text-muted small mb-0">Zona de recreación. Mayor ocupación en fines de semana y festivos.</p>
+                </div>
+            </div>
+
+            <div class="text-center mt-4">
+                <a href="/estadisticas" class="btn btn-primary">
+                    <i class="fas fa-chart-bar me-2"></i>Ver estadísticas del dataset
+                </a>
+            </div>
+        </div>
+
     </div>
+</div>
 
 {% endblock %}

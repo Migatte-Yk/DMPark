@@ -29,9 +29,9 @@ Thumbs.db
 # Archivos de configuración local
 config.local.py
 
-# Modelos grandes (opcional - descomentar si no quieres subirlos)
+# Modelos grandes
 # modelo_parqueo.pkl
 # label_encoders.pkl
 
-# Datos sensibles (si los hubiera)
+# Datos sensibles - Feature Futura
 # data/*.csv

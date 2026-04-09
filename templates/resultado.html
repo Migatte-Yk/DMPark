@@ -1,96 +1,189 @@
 {% extends "base.html" %}
 
-{% block title %}Resultado de Predicción - ParqueaChía{% endblock %}
+{% block title %}Resultado — ParqueaChía{% endblock %}
 
 {% block content %}
 
-    <div class="container mt-5">
-        <div class="row justify-content-center">
-            <div class="col-md-8">
-                <!-- Tarjeta de resultado -->
-                <div class="card shadow-lg mb-4">
-                    <div class="card-header bg-primary text-white">
-                        <h3 class="card-title mb-0">Resultado de la Predicción</h3>
-                    </div>
-                    <div class="card-body">
-                        <!-- Resumen de entrada -->
-                        <div class="alert alert-light">
-                            <p class="mb-2"><strong>📍 Zona:</strong> {{ zona }}</p>
-                            <p class="mb-2"><strong>📅 Día:</strong> {{ dia }}</p>
-                            <p class="mb-0"><strong>⏰ Hora:</strong> {{ "%02d" % hora }}:00</p>
-                        </div>
-
-                        <!-- Predicción principal -->
-                        <div class="text-center py-4">
-                            <h1 class="display-1 mb-2">{{ emoji }}</h1>
-                            <h2 class="mb-1">Ocupación <strong>{{ ocupacion.upper() }}</strong></h2>
-                            <p class="text-muted" style="font-size: 1.2rem;">
-                                Confianza del modelo: <strong>{{ "%.1f" % confianza }}%</strong>
-                            </p>
-                        </div>
-
-                        <!-- Indicador visual de confianza -->
-                        <div class="mb-4">
-                            <label class="form-label">Nivel de confianza</label>
-                            <div class="progress" style="height: 25px;">
-                                <div class="progress-bar 
-                                    {% if confianza >= 80 %}bg-success
-                                    {% elif confianza >= 60 %}bg-info
-                                    {% else %}bg-warning{% endif %}"
-                                    role="progressbar" 
-                                    style="width: {{ confianza }}%;" 
-                                    aria-valuenow="{{ confianza }}" 
-                                    aria-valuemin="0" 
-                                    aria-valuemax="100">
-                                    {{ "%.1f" % confianza }}%
-                                </div>
-                            </div>
-                        </div>
-
-                        <!-- Recomendación -->
-                        <div class="alert alert-warning" role="alert">
-                            <h5 class="alert-heading">💡 Recomendación:</h5>
-                            <p class="mb-0">{{ recomendacion }}</p>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Gráfico de ocupación por hora -->
-                {% if grafico %}
-                <div class="card shadow-lg">
-                    <div class="card-header bg-secondary text-white">
-                        <h5 class="card-title mb-0">📊 Ocupación por hora</h5>
-                    </div>
-                    <div class="card-body text-center">
-                        <p class="text-muted small">Gráfico de ocupación promedio por hora para {{ zona }} en {{ dia }}</p>
-                        <img src="{{ grafico }}" alt="Gráfico de ocupación" class="img-fluid rounded">
-                    </div>
-                </div>
-                {% endif %}
-
-                <!-- Botones de acción -->
-                <div class="mt-4 d-flex gap-2 justify-content-center">
-                    <a href="/" class="btn btn-primary btn-lg">
-                        🔍 Nueva predicción
-                    </a>
-                    <a href="/estadisticas" class="btn btn-secondary btn-lg">
-                        📊 Ver estadísticas
-                    </a>
-                </div>
-
-                <!-- Información interpretación -->
-                <div class="card mt-4 bg-light">
-                    <div class="card-body">
-                        <h5 class="card-title">ℹ️ Interpretación de niveles</h5>
-                        <ul class="mb-0">
-                            <li><strong>🟢 BAJA:</strong> Amplia disponibilidad de estacionamiento</li>
-                            <li><strong>🟡 MEDIA:</strong> Disponibilidad moderada, puede haber demora</li>
-                            <li><strong>🔴 ALTA:</strong> Ocupación crítica, difícil encontrar estacionamiento</li>
-                        </ul>
-                    </div>
-                </div>
+<!-- Page Hero dinámico según ocupación -->
+<section class="page-hero page-hero-{{ ocupacion.lower() }} text-white">
+    <div class="container position-relative">
+        <div class="row align-items-center">
+            <div class="col-lg-8">
+                <nav aria-label="breadcrumb" class="mb-3">
+                    <ol class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="/">Inicio</a></li>
+                        <li class="breadcrumb-item"><a href="/prediccion">Predicción</a></li>
+                        <li class="breadcrumb-item active">Resultado</li>
+                    </ol>
+                </nav>
+                <h2 class="mb-2">
+                    <i class="fas fa-chart-pie me-3"></i>Resultado de Predicción
+                </h2>
+                <p class="lead mb-0">
+                    <i class="fas fa-map-marker-alt me-1"></i>{{ zona }}&ensp;·&ensp;
+                    <i class="fas fa-calendar-alt me-1"></i>{{ dia }}&ensp;·&ensp;
+                    <i class="fas fa-clock me-1"></i>{{ "%02d" % hora }}:00
+                </p>
+            </div>
+            <div class="col-lg-4 text-end d-none d-lg-block" style="font-size: 5rem; opacity: 0.6; line-height: 1;">
+                {{ emoji }}
             </div>
         </div>
     </div>
+</section>
+
+<div class="container py-5">
+    <div class="row g-4">
+
+        <!-- Columna principal -->
+        <div class="col-lg-8">
+
+            <!-- Tarjeta resultado -->
+            <div class="card shadow-lg mb-4 fade-in">
+                <div class="card-body p-5 text-center">
+                    <p class="text-muted text-uppercase fw-bold small mb-3" style="letter-spacing: 1.5px;">
+                        Nivel de ocupación estimado
+                    </p>
+                    <span class="result-emoji mb-3 d-block">{{ emoji }}</span>
+                    <div class="mb-3">
+                        <span class="ocupacion-badge badge-{{ ocupacion.lower() }}">{{ ocupacion }}</span>
+                    </div>
+                    <p class="text-muted mt-3 mb-4">
+                        Confianza del modelo: <strong>{{ "%.1f" % confianza }}%</strong>
+                    </p>
+
+                    <!-- Barra de confianza -->
+                    <div class="mx-auto" style="max-width: 380px;">
+                        <div class="d-flex justify-content-between small text-muted mb-1">
+                            <span><i class="fas fa-shield-alt me-1"></i>Confianza</span>
+                            <span><strong>{{ "%.1f" % confianza }}%</strong></span>
+                        </div>
+                        <div class="progress" style="height: 10px;">
+                            <div class="progress-bar
+                                {% if confianza >= 80 %}bg-success
+                                {% elif confianza >= 60 %}bg-warning
+                                {% else %}bg-danger{% endif %}"
+                                role="progressbar"
+                                style="width: {{ confianza }}%"
+                                aria-valuenow="{{ confianza }}"
+                                aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Recomendación -->
+            <div class="alert alert-warning mb-4 fade-in">
+                <h6 class="fw-bold mb-2">
+                    <i class="fas fa-lightbulb me-2" style="color: var(--secondary-color)"></i>Recomendación
+                </h6>
+                <p class="mb-0">{{ recomendacion }}</p>
+            </div>
+
+            <!-- Gráfico de ocupación -->
+            {% if grafico %}
+            <div class="card shadow-lg fade-in">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-chart-bar me-2"></i>Ocupación por hora — {{ zona }} ({{ dia }})
+                    </h6>
+                </div>
+                <div class="card-body p-4 text-center">
+                    <p class="text-muted small mb-3">Ocupación promedio histórica a lo largo del día para la zona seleccionada</p>
+                    <img src="{{ grafico }}" alt="Gráfico de ocupación por hora" class="img-fluid">
+                </div>
+            </div>
+            {% endif %}
+
+        </div>
+
+        <!-- Sidebar -->
+        <div class="col-lg-4">
+
+            <!-- Parámetros consultados -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-info-circle me-2"></i>Parámetros consultados
+                    </h6>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="info-list">
+                        <li>
+                            <i class="fas fa-map-marker-alt mt-1" style="color: var(--secondary-color)"></i>
+                            <div>
+                                <small class="text-muted d-block">Zona</small>
+                                <strong>{{ zona }}</strong>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-calendar-alt mt-1" style="color: var(--secondary-color)"></i>
+                            <div>
+                                <small class="text-muted d-block">Día</small>
+                                <strong>{{ dia }}</strong>
+                            </div>
+                        </li>
+                        <li>
+                            <i class="fas fa-clock mt-1" style="color: var(--secondary-color)"></i>
+                            <div>
+                                <small class="text-muted d-block">Hora</small>
+                                <strong>{{ "%02d" % hora }}:00 — {{ "%02d" % (hora + 1) }}:00</strong>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Interpretación de niveles -->
+            <div class="card shadow-sm mb-4">
+                <div class="card-header bg-primary text-white">
+                    <h6 class="mb-0">
+                        <i class="fas fa-traffic-light me-2"></i>Interpretación
+                    </h6>
+                </div>
+                <div class="card-body p-3">
+                    <ul class="info-list">
+                        <li>
+                            <span style="color: #28a745; font-size: 1.2rem; line-height: 1.4;">●</span>
+                            <div>
+                                <strong>Baja:</strong>
+                                <span class="text-muted small d-block">Amplia disponibilidad de estacionamiento</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span style="color: #e67e22; font-size: 1.2rem; line-height: 1.4;">●</span>
+                            <div>
+                                <strong>Media:</strong>
+                                <span class="text-muted small d-block">Disponibilidad moderada, puede haber demora</span>
+                            </div>
+                        </li>
+                        <li>
+                            <span style="color: #dc3545; font-size: 1.2rem; line-height: 1.4;">●</span>
+                            <div>
+                                <strong>Alta:</strong>
+                                <span class="text-muted small d-block">Ocupación crítica, muy difícil encontrar parqueo</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!-- Acciones -->
+            <div class="d-grid gap-2">
+                <a href="/prediccion" class="btn btn-warning btn-lg fw-bold">
+                    <i class="fas fa-search me-2"></i>Nueva consulta
+                </a>
+                <a href="/estadisticas" class="btn btn-primary">
+                    <i class="fas fa-chart-bar me-2"></i>Ver estadísticas
+                </a>
+                <a href="/" class="btn btn-secondary">
+                    <i class="fas fa-home me-2"></i>Ir al inicio
+                </a>
+            </div>
+
+        </div>
+    </div>
+</div>
 
 {% endblock %}
